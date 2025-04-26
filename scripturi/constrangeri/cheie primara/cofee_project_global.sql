@@ -7,7 +7,7 @@
 create table PRODUS as 
 select * from user_bd.produs_bucuresti;
 /
-create or replace trigger trg_insert_produs
+create or replace trigger t_insert_produs
 before insert on produs
 for each row
 declare

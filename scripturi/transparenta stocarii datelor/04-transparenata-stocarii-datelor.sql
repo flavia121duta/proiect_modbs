@@ -226,7 +226,7 @@ from   user_updatable_columns
 where  table_name = upper('regiuni_global');
 /
 -- definesc un trigger care sa permita propagarea operatiilor LMD
---asupra tabelelor de baza ale vizualizrii
+-- asupra tabelelor de baza ale vizualizrii
 
 create or replace trigger t_regiuni_global
 instead of insert or update or delete on regiuni_global
@@ -271,7 +271,9 @@ select * from regiune_provincie@bd_provincie
 -- anulez modificarile facute
 rollback;
 /
+
 -- transparenta localizarii datelor in cazul fragmentelor orizontale derivate
+
 -- avem urmatoarele fragmente orizontale derivate: 
 -- judet, oras, locatie, cafenea, inventar_cafenea, comanda_client, comanda_produs
 
@@ -318,17 +320,7 @@ select * from user_bd.comanda_produs_bucuresti
 union all
 select * from comanda_produs_provincie@bd_provincie;
 /
--- tabelele PRODUSE, MATERIE_PRIMA, PRODUS_MATERIE_PRIMA sunt replicate
--- deci le replicam si aici
-create or replace view produse_global
-as select * from produs_provincie@bd_provincie;
 
-create or replace view materii_prime_global
-as select * from materie_prima_provincie@bd_provincie;
-/
-create or replace view produse_materii_prime_global
-as select * from produs_materie_prima_provincie@bd_provincie;
-/
 -- atunci cand se plaseaza o comanda, vom face propagarea datelor
 -- din nodul global in nodul corespunzator
 -- in functie de cafeneaua in care e plasata comanda
@@ -417,42 +409,3 @@ select * from comanda_produs_provincie@bd_provincie order by id_comanda_client d
 /
 
 -- ex. 4 c)
-
-/
-
--- aici vine ceva useless, dar inca nu vreau sa-l sterg
-
-CREATE OR REPLACE TRIGGER t_orase_global
-INSTEAD OF INSERT ON orase
-FOR EACH ROW
-DECLARE
-   v_count INTEGER;
-BEGIN
-   SELECT COUNT(*)
-   INTO v_count
-   FROM judete j
-   WHERE j.id_judet = :new.id_judet
-     AND j.id_regiune = (
-         SELECT r.id_regiune
-         FROM regiuni r
-         WHERE r.nume = 'Bucuresti-Ilfov'
-     );
-
-   IF v_count > 0 THEN
-      INSERT INTO user_bd.oras_bucuresti (id_oras, id_judet, nume)
-      VALUES (:new.id_oras, :new.id_judet, :new.nume);
-   ELSE
-      INSERT INTO oras_provincie@bd_provincie (id_oras, id_judet, nume)
-      VALUES (:new.id_oras, :new.id_judet, :new.nume);
-   END IF;
-END;
-
-/
-insert into orase (id_oras, id_judet, nume)
-values (101, 1, 'Oras 101');
-commit;
-/
-select o.id_oras, o.id_judet, o.nume
-from orase o join judete j on o.id_judet = j.id_judet
-join regiuni r on j.id_regiune = r.id_regiune
-and r.nume = 'Bucuresti-Ilfov';

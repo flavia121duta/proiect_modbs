@@ -11,7 +11,7 @@ grant all on materie_prima_bucuresti to user_global;
 grant all on produs_bucuresti to user_global;
 grant all on regiune_bucuresti to user_global;
 /
--- nu mergege: grant select, insert, update, delete on user_global to user_bd;
+-- nu merge: grant select, insert, update, delete on user_global to user_bd;
 grant all on angajat to user_bd;
 grant all on client to user_bd;
 grant all on user_tab_columns to user_bd;
