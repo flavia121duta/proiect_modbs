@@ -44,3 +44,10 @@ CREATE MATERIALIZED VIEW mv_produs_materie_prima_bucuresti
   WITH PRIMARY KEY
 AS
   SELECT * FROM produs_materie_prima@bd_global;
+
+/
+
+-- sterg tabelele temporare create inainte a face vizualizari materializate
+drop table produs_bucuresti;
+drop table materie_prima_bucuresti;
+drop table produs_materie_prima_bucuresti;

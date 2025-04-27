@@ -1,8 +1,9 @@
--- in SYS_HOMEDB1
+-- in schema SYS_HOMEDB1
 
 --conectare ca sys 
 --definire role  
 create role sgbd_role; 
+
 --atribuire privilegii si role-uri noului role 
 grant connect to sgbd_role; 
 grant resource to sgbd_role; 
@@ -26,8 +27,10 @@ profile default
 default tablespace users  
 quota unlimited on users  
 account unlock; 
+
 --atribuire role nou definit utilizatorului 
 grant sgbd_role to user_all; 
+
 --atribuire privilegiu unlimited tablespace utilizatorului 
 grant unlimited tablespace to user_all;
 /
@@ -36,8 +39,10 @@ profile default
 default tablespace users  
 quota unlimited on users  
 account unlock; 
+
 --atribuire role nou definit utilizatorului 
 grant sgbd_role to user_bd; 
+
 --atribuire privilegiu unlimited tablespace utilizatorului 
 grant unlimited tablespace to user_bd;
 
@@ -45,7 +50,7 @@ grant unlimited tablespace to user_bd;
 --------------------------------------------------
 
 
--- in SYS_HOMEDB2
+-- in schema SYS_HOMEDB2
 
 --conectare ca sys 
 --definire role  

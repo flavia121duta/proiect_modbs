@@ -1,5 +1,4 @@
--- C##OLTP_USER este numele utilizatorului pe care il folosesc
-
+-- acest script a fost creat semestrul trecut pentru materia DW&BI
 -- crearea bazei de date
 
 CREATE TABLE cafenea (

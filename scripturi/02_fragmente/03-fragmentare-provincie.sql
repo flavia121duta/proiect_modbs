@@ -64,5 +64,15 @@ join comanda_client_provincie cc on cp.id_comanda_client = cc.id_comanda_client;
 create table client_provincie as
 select id_client, nume, prenume
 from client@bd_all;
+/
+-- momentan fac copie tabelelor PRODUS, MATERIE_PRIMA, RPODUS_MATERIE_PRIMA
+-- dar voi sterge aceste copii atunci cand voi face vizualizari materializate
 
+create table produs_bucuresti as
+select * from produs@bd_all;
 
+create table materie_prima_bucuresti as
+select * from materie_prima@bd_all;
+
+create table produs_materie_prima_bucuresti as
+select * from produs_materie_prima@bd_all;

@@ -38,3 +38,9 @@ AS
 
 -- fac manual refreh pe vizualizare
 EXECUTE DBMS_MVIEW.REFRESH(UPPER('mv_produs_materie_prima_provincie'),'F');
+/
+
+-- sterg tabelele temporare create inainte a face vizualizari materializate
+drop table produs_provincie;
+drop table materie_prima_provincie;
+drop table produs_materie_prima_provincie;

@@ -44,8 +44,4 @@ USING '(DESCRIPTION=
             (ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))
             (CONNECT_DATA=(SERVICE_NAME=homedb1))
           )';
-
-/
-SELECT table_name FROM user_tables@bd_eu;
-/
-SELECT table_name FROM user_tables@bd_am;
+          
