@@ -5,6 +5,11 @@
 -- ma conectez la coffee_project_bdd_global
 
 -- aplic constrangerea de unicitate locala pentru 
+-- coloana email din tabela replicata CLIENT
+alter table client
+add constraint u_email_client unique (email);
+/
+-- aplic constrangerea de unicitate locala pentru 
 -- combinatia de coloane (denumire_dimenziune) din tabela replicata PRODUS
 alter table produs
 add constraint u_produs_denumire_dimensiune unique(denumire, dimensiune);
