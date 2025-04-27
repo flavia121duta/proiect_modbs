@@ -240,3 +240,64 @@ begin
     end if;
 end;
 /
+
+-- trigger care asigura constrangerea de PK pentru id_produs
+-- din tabelul PRODUS replicat sub forma de view materializat pe cele doua statii
+
+create or replace trigger t_pk_insert_produs
+before insert on produs
+for each row
+declare
+    v_count_bucuresti integer;
+    v_count_provincie integer;
+begin
+    -- verificam daca id_produs exista in mv_produs_bucuresti
+    select count(*) into v_count_bucuresti
+    from mv_produs_bucuresti@bd_bucuresti
+    where id_produs = :new.id_produs;
+
+    if v_count_bucuresti > 0 then
+        raise_application_error(-20001, 'Constrangere de cheie primara incalcata. Vederea materializata mv_produs_bucuresti contine aceeasi cheie primara id_produs = ' || :new.id_produs);
+    end if;
+
+    -- verificam daca id_produs exista in produs_provincie
+    select count(*) into v_count_provincie
+    from mv_produs_provincie@bd_provincie
+    where id_produs = :new.id_produs;
+
+    if v_count_bucuresti > 0 then
+        v_count_provincie(-20001, 'Constrangere de cheie primara incalcata. Vederea materializata mv_produs_provincie contine aceeasi cheie primara id_produs = ' || :new.id_produs);
+    end if;
+
+end;
+/
+
+-- trigger care asigura constrangerea de PK pentru id_materie
+-- din tabelul MATERIE_PRIMA replicat sub forma de view materializat pe cele doua statii
+
+create or replace trigger t_pk_insert_materie_prima
+before insert on materie_prima
+for each row
+declare
+    v_count_bucuresti integer;
+    v_count_provincie integer;
+begin
+    -- verificam daca id_produs exista in mv_materie_prima_bucuresti
+    select count(*) into v_count_bucuresti
+    from mv_materie_prima_bucuresti@bd_bucuresti
+    where id_materie = :new.id_materie;
+
+    if v_count_bucuresti > 0 then
+        raise_application_error(-20001, 'Constrangere de cheie primara incalcata. Vederea materializata mv_materie_prima_bucuresti contine aceeasi cheie primara id_materie = ' || :new.id_materie);
+    end if;
+
+    -- verificam daca id_produs exista in materie_prima
+    select count(*) into v_count_provincie
+    from mv_materie_prima_provincie@bd_provincie
+    where id_materie = :new.id_materie;
+
+    if v_count_provincie > 0 then
+        raise_application_error(-20001, 'Constrangere de cheie primara incalcata. Vederea materializata mv_materie_prima_provincie contine aceeasi cheie primara id_materie = ' || :new.id_materie);
+    end if;
+
+end;
