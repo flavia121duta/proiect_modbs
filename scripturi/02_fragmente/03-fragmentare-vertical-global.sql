@@ -1,5 +1,6 @@
 -- ma conectez la schema coffee_project_global
 
+-- creez fragmentele verticale pentru ANGAJAT si CLIENT cu informatiile sensibile
 create table ANGAJAT
 as (
         select id_angajat, salariu, data_angajarii 

@@ -5,16 +5,6 @@
 -- ma conectez la coffee_project_bdd_bucuresti
 
 -- aplic constrangerea de unicitate locala pentru 
--- combinatia de coloane (denumire_dimenziune) din PRODUS_BUCURESTI
-alter table produs_bucuresti
-add constraint u_produs_denumire_dimensiune unique(denumire, dimensiune);
-/
--- aplic constrangerea de unicitate locala pentru 
--- coloana nume_materie din MATERIE_PRIMA_BUCURESTI
-alter table materie_prima_bucuresti
-add constraint u_materie_prima_nume_materie unique(nume_materie);
-/
--- aplic constrangerea de unicitate locala pentru 
 -- combinatia de coloane (nume, prenume, id_cafenea) din ANGAJAT_BUCURESTI
 alter table angajat_bucuresti
 add constraint u_angajat_nume_prenume_id_cafenea unique(nume, prenume, id_cafenea);
@@ -34,10 +24,6 @@ add constraint u_nume_oras unique(nume);
 -- aplic constrangerea de unicitate pentru coloana nume_cafenea din CAFENEA_BUCURESTI
 alter table cafenea_bucuresti
 add constraint u_nume_cafenea unique(nume_cafenea);
-/
-
--- ex. 8 a) ii. ????
-
 
 /
 -- ex. 8 a) iii.
@@ -69,7 +55,7 @@ BEGIN
         and ag.id_angajat != :new.id_angajat;
 
     IF v_conflict_count > 0 THEN
-        RAISE_APPLICATION_ERROR(-20001, 'Exista deja un angajat cu aceleasi nume, prenume si salariu!');
+        RAISE_APPLICATION_ERROR(-20001, 'Exista deja un angajat cu aceleasi nume, prenume si id_cafenea!');
     END IF;
 END;
 /

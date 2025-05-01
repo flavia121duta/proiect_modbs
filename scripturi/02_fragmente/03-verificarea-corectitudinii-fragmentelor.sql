@@ -2,6 +2,8 @@
 -- ex. 5
 -- verificarea corectitudinii fragmentarilor realizate
 
+-- ma conectez la schema coffee_project_bdd_bucuresti
+
 -- tabela REGIUNE: fragmentare orizontala primara
 
 -- COMPLETITUDINEA
@@ -372,16 +374,22 @@ intersect
 select * from inventar_cafenea_provincie@bd_provincie;
 /
 
+-- verificarea corectitudinii fragmentelor verticale
+
+-- in global fac aceste grat-uri pentru ca user-ul din bucuresti sa aiba acces la datele din global
+grant all on angajat to user_bd;
+grant all on client to user_bd;
+grant all on user_tab_columns to user_bd;
+
 -- lab. 2, ex. 3 pentru cele doua tabele fragmentate vertical:
 -- ANGAJAT
 -- CLIENT
-
 
 -- tabela ANGAJAT: fragmentare verticala
 
 -- RECONSTRUCTIA
 
--- 1000 angajati
+-- exista 1000 angajati
 select ab.id_angajat, ab.nume, ab.prenume, to_char(ab.id_cafenea) id_cafenea,
         ag.salariu, ag.data_angajarii
 from   angajat_bucuresti ab
